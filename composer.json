@@ -1,0 +1,75 @@
+{
+    "name": "dominus77/yii2-advanced-start",
+    "description": "Yii 2 Advanced start template on Yii2",
+    "keywords": ["Dominus77", "yii2", "framework", "advanced", "project template"],
+    "homepage": "http://dominus77.github.io/yii2-advanced-start",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "source": "https://github.com/Dominus77/yii2-advanced-start"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6",
+        "ext-json": "*",
+        "almasaeed2010/adminlte": "^2.4",
+        "bower-asset/chart.js": "^2.9",
+        "bower-asset/html5shiv": "^3.7",
+        "bower-asset/respond": "^1.4",
+        "dominus77/yii2-jcrop-widget": "^2.1",
+        "dominus77/yii2-maintenance": "^1.0",
+        "dominus77/yii2-noty": "^1.0",
+        "driftyco/ionicons": "^2.0",
+        "fortawesome/font-awesome": "^5.15",
+        "guzzlehttp/guzzle": "~6.0",
+        "yii2tech/ar-softdelete": "~1.0",
+        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-apidoc": "~2.1.0",
+        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "yiisoft/yii2-imagine": "^2.0",
+        "yiisoft/yii2-jui": "^2.0",
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "^4.0",
+        "codeception/module-asserts": "^1.0",
+        "codeception/module-filesystem": "^1.0",
+        "codeception/module-phpbrowser": "^1.0",
+        "codeception/module-rest": "^1.2",
+        "codeception/module-yii2": "^1.0",
+        "codeception/verify": "~0.5.0 || ~1.1.0",
+        "roave/security-advisories": "dev-master",
+        "softcreatr/jsonpath": "^0.6.4",
+        "squizlabs/php_codesniffer": "^3.5",
+        "symfony/browser-kit": ">=2.7 <=4.2.4",
+        "yiisoft/yii2-debug": "~2.0.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.0.0"
+    },
+    "scripts": {
+        "app-init-dev": "php init --env=Development --overwrite=n",
+        "app-init-prod": "php init --env=Production --overwrite=n",
+        "migrate-up": "php yii migrate/up --interactive=0",
+        "migrate-down": "php yii migrate/down --interactive=0",
+        "migrate-test-up": "php yii_test migrate/up --interactive=0",
+        "migrate-test-down": "php yii_test migrate/down --interactive=0",
+        "rbac-init": "php yii rbac/init",
+        "build": "codecept build",
+        "test": "codecept run",
+        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 api common backend frontend console modules --ignore=*/assets/src,*/runtime/*,*/web/assets/*,frontend/assets/bootstrap/*,requirements.php,*/migrations/*,common/gii/generators/*",
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 api common backend frontend console modules --ignore=*/assets/src,*/runtime/*,*/web/assets/*,frontend/assets/bootstrap/*,requirements.php,*/migrations/*,common/gii/generators/*"
+    },
+    "config": {
+        "sort-packages": true,
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
+    },
+    "repositories": {
+        "asset-packagist.org": {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    }
+}
