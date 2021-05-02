@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+
+  webserver:
+    container_name: webserver
+    build: ./docker/nginx
+    restart: on-failure
+    env_file:
+      - ./docker/config/nginx.env
+    ports:
+      - 80:80
+    volumes:
+      - ./:/var/www/app
+    depends_on:
+      - php-server
+
+  php-server:
+    container_name: php-server
+    build: ./docker/server
+    restart: on-failure
+    volumes:
+      - ./:/var/www/app
+    working_dir: /var/www/app
+
+  db:
+    container_name: db
+    build: ./docker/db
+    env_file:
+      - ./docker/config/db.env
+    volumes:
+      - database:/var/lib/mysql
+      - ./docker/db/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+
+volumes:
+  database:
