@@ -1,4 +1,4 @@
-FROM php:7.2.26-fpm
+FROM php:7.4-fpm
 
 # Install PHP extensions and PECL modules.
 RUN buildDeps=" \
@@ -15,17 +15,18 @@ RUN buildDeps=" \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $buildDeps $runtimeDeps \
  && docker-php-ext-install bcmath mbstring mysqli opcache pdo_mysql zip \
  && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/* \
+ && apt update \
+ && apt upgrade -y \
+ && apt install vim -y\
+ && apt install htop
 
-RUN apt-get update && \
-apt-get install -y --no-install-recommends \
-libjpeg-dev \
-libfreetype6-dev
-RUN docker-php-ext-install gd && \
-docker-php-ext-configure gd \
---with-jpeg-dir=/usr/lib \
---with-freetype-dir=/usr/include/freetype2 && \
-docker-php-ext-install gd exif
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
 
 # Install nodej
 RUN apt-get install -y nodejs npm
