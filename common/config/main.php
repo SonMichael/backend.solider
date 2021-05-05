@@ -16,8 +16,8 @@ $params = ArrayHelper::merge(
 );
 
 return [
-    'name' => 'Yii2-advanced-start',
-    'timeZone' => 'Europe/Moscow',
+    'name' => 'backend.solider',
+    'timeZone' => 'Asia/Ho_Chi_Minh',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -47,7 +47,7 @@ return [
     'components' => [
         'db' => [
             'class' => Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=yii2_advanced_start',
+            'dsn' => 'mysql:host=localhost;dbname=solider',
             'username' => '',
             'password' => '',
             'charset' => 'utf8',
