@@ -11,72 +11,61 @@ use modules\users\Bootstrap as UserBootstrap;
 
 $params = ArrayHelper::merge(
     require __DIR__ . '/../../common/config/params.php',
-    require __DIR__ . '/../../common/config/params-local.php',
-    require __DIR__ . '/params.php',
-    require __DIR__ . '/params-local.php'
+    require __DIR__ . '/params.php'
 );
 
 return [
-    'id' => 'app-api',
-    'language' => 'en', // en, ru
-    'homeUrl' => '/api',
+    'id' => 'api',
+    'language' => 'vi', // en, ru
     'basePath' => dirname(__DIR__),
-    'bootstrap' => [
-        'log',
-        UserBootstrap::class
-    ],
+    'controllerNamespace' => 'api\controllers',
+    'defaultRoute' => 'v1/default',
     'modules' => [
         'v1' => [
-            'class' => V1Module::class   // here is our v1 modules
-        ]
+            'class' => 'api\modules\v1\Module',
+        ],
     ],
+    'bootstrap' => [
+        'log',
+        [
+            'class' => \yii\filters\ContentNegotiator::className(),
+            'formats' => [
+                'application/json' => \yii\web\Response::FORMAT_JSON,
+                'application/xml' => \yii\web\Response::FORMAT_XML,
+                'application/x-www-form-urlencoded' => \yii\web\Response::FORMAT_JSON,
+            ],
+        ],
+    ],
+    'params' => $params,
     'components' => [
         'request' => [
-            'baseUrl' => '/api',
             'parsers' => [
-                'application/json' => JsonParser::class
-            ]
+                'application/json' => 'yii\web\JsonParser',
+            ],
+            'enableCsrfValidation' => true,
+            'cookieValidationKey' => 'fM2hT237NcmHV8A4yNvPBa8J8s0iMLa8',
+            'csrfCookie' => [
+                'name' => '_csrf',
+                'path' => '/',
+                'domain' => ".api.solider.local",
+            ],
         ],
-        'user' => [
-            'identityClass' => User::class,
-            'enableSession' => false,
-            'enableAutoLogin' => false,
-            'loginUrl' => null
+        'response' => [
+            'class' => \yii\web\Response::className(),
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+                if ($response->data !== null) {
+                    $response->data = [
+                        'success' => $response->isSuccessful,
+                        'data' => $response->data,
+                    ];
+//                    $response->statusCode = 200;
+                }
+            },
         ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => FileTarget::class,
-                    'levels' => ['error', 'warning']
-                ]
-            ]
+        'errorHandler' => [
+            'class' => \api\components\ErrorHandler::className(),
         ],
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'enableStrictParsing' => true,
-            'showScriptName' => false,
-            'rules' => [
-                [
-                    'class' => UrlRule::class,
-                    'controller' => [
-                        'v1/user'
-                    ],
-                    'except' => ['delete'],
-                    'pluralize' => true
-                ],
-                [
-                    'class' => UrlRule::class,
-                    'controller' => [
-                        'v1/message'
-                    ],
-                    'pluralize' => false
-                ]
-            ]
-        ],
-        'cache' => [
-            'class' => FileCache::class
-        ]
     ],
-    'params' => $params
+
 ];

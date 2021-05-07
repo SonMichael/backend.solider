@@ -1,37 +1,30 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Tan
+ * Date: 5/16/2019
+ * Time: 2:22 PM
+ */
 
 namespace api\modules\v1\controllers;
 
-use yii\filters\Cors;
-use yii\rest\Controller;
-use api\modules\v1\models\Message;
 
-/**
- * Class MessageController
- * @package api\modules\v1\controllers
- */
-class MessageController extends Controller
+use api\components\RestController;
+
+class MessageController extends RestController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
+
+    public function verbs()
     {
-        $behaviors = parent::behaviors();
-
-        // Add CORS filter
-        $behaviors['corsFilter'] = [
-            'class' => Cors::class
+        return [
+            'index' => ['GET'],
         ];
-
-        return $behaviors;
     }
 
-    /**
-     * @return string
-     */
     public function actionIndex()
     {
-        return (new Message())->message;
+        var_dump(1);
+        die;
     }
+
 }

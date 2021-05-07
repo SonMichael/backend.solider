@@ -1,73 +1,55 @@
 <?php
-
+use yii\swiftmailer\Mailer;
 use yii\db\Connection;
-use yii\rbac\DbManager;
-use yii\caching\FileCache;
-use yii\helpers\ArrayHelper;
-use modules\main\Module as MainModule;
-use modules\users\Module as UserModule;
-use modules\rbac\Module as RbacModule;
-use dominus77\maintenance\interfaces\StateInterface;
-use dominus77\maintenance\states\FileState;
-
-$params = ArrayHelper::merge(
-    require __DIR__ . '/params.php',
-    require __DIR__ . '/params-local.php'
-);
 
 return [
-    'name' => 'backend.solider',
-    'timeZone' => 'Asia/Ho_Chi_Minh',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    'aliases' => [
-        '@bower' => '@vendor/bower-asset',
-        '@npm' => '@vendor/npm-asset'
-    ],
-    'bootstrap' => [],
-    'container' => [
-        'singletons' => [
-            StateInterface::class => [
-                'class' => FileState::class,
-                'dateFormat' => 'd-m-Y H:i:s',
-                'directory' => '@frontend/runtime'
-            ]
-        ]
-    ],
-    'modules' => [
-        'main' => [
-            'class' => MainModule::class
-        ],
-        'users' => [
-            'class' => UserModule::class
-        ],
-        'rbac' => [
-            'class' => RbacModule::class
-        ]
-    ],
+    'name' => 'Solider',
+    'language' => 'vi',
+    'timeZone'   => 'Asia/Ho_Chi_Minh',
     'components' => [
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+        ],
+        'formatter' => [
+            'dateFormat'        => 'php:d/m/Y',
+            'datetimeFormat'    => 'php:d/m/Y G:i',
+            'timeFormat'        => 'php:G:i:s',
+            'locale'            => 'vi_VN',
+            'defaultTimeZone'   => 'Asia/Ho_Chi_Minh',
+            'currencyCode'      => 'đ',
+        ],
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'showScriptName' => false,
+            'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
+            'baseUrl' => '/',
+        ],
+        'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+                [
+                    'levels' => YII_DEBUG ? ['warning', 'error', 'debug'] : ['error'],
+                    'except' => ['yii\web\HttpException*'],
+                    'class' => 'common\components\DbTarget',
+                    'logVars' => [],
+                ]
+            ]
+        ],
         'db' => [
             'class' => Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=solider',
-            'username' => '',
-            'password' => '',
-            'charset' => 'utf8',
-            'tablePrefix' => 'tbl_',
-            'enableSchemaCache' => true
-        ],
-        'authManager' => [
-            'class' => DbManager::class,
-            'cache' => 'cache'
-        ],
-        'cache' => [
-            'class' => FileCache::class,
-            'cachePath' => '@frontend/runtime/cache'
+            'dsn' => 'mysql:host=127.0.0.1;dbname=solider',
+            'username' => 'root',
+            'password' => ''
         ],
         'mailer' => [
-            'useFileTransport' => false
-        ],
-        'assetManager' => [
-            'appendTimestamp' => true,
-            'basePath' => '@app/web/assets'
+            'class' => Mailer::class,
+            'viewPath' => '@common/mail',
+            // send all mails to a file by default. You have to set
+            // 'useFileTransport' to false and configure a transport
+            // for the mailer to send real emails.
+            'useFileTransport' => true
         ]
-    ]
+    ],
 ];

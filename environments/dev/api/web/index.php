@@ -1,17 +1,18 @@
 <?php
+defined('YII_DEBUG') or define('YII_DEBUG', true);
+defined('YII_ENV') or define('YII_ENV', 'dev');
 
-use yii\helpers\ArrayHelper;
-use yii\web\Application;
+require(__DIR__ . '/../../vendor/autoload.php');
+require(__DIR__ . '/../../vendor/yiisoft/yii2/Yii.php');
+require(__DIR__ . '/../../common/config/bootstrap.php');
+require(__DIR__ . '/../config/bootstrap.php');
 
-require dirname(dirname(__DIR__)) . '/common/web/index.php';
-require YII_APP_BASE_PATH . '/api/config/bootstrap.php';
 
-$config = ArrayHelper::merge(
-    require YII_APP_BASE_PATH . '/common/config/main.php',
-    require YII_APP_BASE_PATH . '/common/config/main-local.php',
-    require YII_APP_BASE_PATH . '/api/config/main.php',
-    require YII_APP_BASE_PATH . '/api/config/main-local.php'
+$config = yii\helpers\ArrayHelper::merge(
+    require(__DIR__ . '/../../common/config/main.php'),
+    require(__DIR__ . '/../config/main.php')
 );
+$application = new yii\web\Application($config);
 
-$application = new Application($config);
 $application->run();
+
