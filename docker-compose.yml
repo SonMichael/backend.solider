@@ -22,8 +22,6 @@ services:
     volumes:
       - ./:/var/www/app
     working_dir: /var/www/app
-    ports:
-      - 9000:9000
 
   db:
     container_name: db

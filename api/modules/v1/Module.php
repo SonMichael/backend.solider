@@ -17,11 +17,18 @@ class Module extends \yii\base\Module
      */
     public $controllerNamespace = 'api\modules\v1\controllers';
 
-    public function init()
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
     {
-
-        parent::init();
-
-        // custom initialization code goes here
+        return [
+            'rateLimiter' => [
+                'class' => RateLimiter::class,
+                'user' => new IpLimiter(),
+                'enableRateLimitHeaders' => true,
+                'errorMessage' => Yii::t('app', 'Exceeded the limit of applications!')
+            ]
+        ];
     }
 }
