@@ -19,9 +19,10 @@ RUN buildDeps=" \
  && apt update \
  && apt upgrade -y \
  && apt install vim -y\
- && apt install htop
+ && apt install htop \
+ && apt-get install -y procps
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \

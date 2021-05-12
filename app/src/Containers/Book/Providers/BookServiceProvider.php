@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use LargeLaravel\Containers\Book\Actions\Decorators\GetBookListActionLogger;
 use LargeLaravel\Containers\Book\Actions\GetBookListAction;
 use LargeLaravel\Containers\Book\Proxies\BookEloquentProxy;
-use LargeLaravel\Containers\Book\Subactions\Interfaces\GetBookListActionInterface;
+use LargeLaravel\Containers\Book\Actions\Interfaces\GetBookListActionInterface;
 
 class BookServiceProvider extends ServiceProvider
 {

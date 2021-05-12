@@ -7,7 +7,9 @@ RUN rm -rf /etc/nginx/conf.d/default.conf \
      && apt update \
      && apt upgrade -y \
      && apt install vim -y\
-     && apt install htop
+     && apt install htop \
+     && apt-get update \
+     && apt-get install -y procps
 
 # Copy sh files.
 COPY envsubst.sh /etc/nginx/conf.d/

@@ -2,7 +2,7 @@
 
 namespace LargeLaravel\Containers\Book\UI\API\Controllers;
 
-use LargeLaravel\Containers\Book\Subactions\Interfaces\GetBookListActionInterface;
+use LargeLaravel\Containers\Book\Actions\Interfaces\GetBookListActionInterface;
 use LargeLaravel\Containers\Book\UI\API\Resources\BookListResource;
 use LargeLaravel\Ship\Abstracts\Controllers\Controller;
 use LargeLaravel\Ship\Http\Requests\API\PaginateRequest;
